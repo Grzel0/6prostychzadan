@@ -30,3 +30,12 @@ rl.question("Podaj swoje imie: ", function(imie) {
     })
 })
 
+fs.readFile("user.json", "utf-8", (err, data)=>{
+    if(err){
+        console.error(`Błąd odczytywania pliku ${err}`)
+        return;
+    }
+    const userobject = JSON.parse(data);
+
+    console.log("dane z pliku user.json: ", userobject)
+})
