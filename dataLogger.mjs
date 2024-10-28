@@ -14,7 +14,7 @@ rl.question("Podaj swoje imie: ", function(imie) {
                 nazwisko: nazwisko,
                 wiek: Number(wiek)
             };
-            
+            console.log("Utworzony obiekt:", user); 
             const jsonstringuser = JSON.stringify(user)
             fs.writeFile("user.json", jsonstringuser, err=>{
                 if(err){
@@ -24,18 +24,18 @@ rl.question("Podaj swoje imie: ", function(imie) {
                     console.log("zapisano dane do plik json")
                 }
             })
-            console.log("Utworzony obiekt:", user); 
+            
             rl.close()
+            fs.readFile("user.json", "utf-8", (err, data)=>{
+                if(err){
+                    console.error(`Błąd odczytywania pliku ${err}`)
+                    return;
+                }
+                const userobject = JSON.parse(data);
+            
+                console.log("dane z pliku user.json: ", userobject)
+            })
         })
     })
 })
 
-fs.readFile("user.json", "utf-8", (err, data)=>{
-    if(err){
-        console.error(`Błąd odczytywania pliku ${err}`)
-        return;
-    }
-    const userobject = JSON.parse(data);
-
-    console.log("dane z pliku user.json: ", userobject)
-})
