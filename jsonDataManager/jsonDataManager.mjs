@@ -45,6 +45,23 @@ rl.question('Jeśli chcesz dodać nowy obiekt wpisz "dodaj", a jeśli chcesz wy�
             })
         })
     }
-        if(option ==="wyswietl"){
-        }
+    else if(option ==="wyswietl"){
+        rl.question("Podaj nazwę pliku JSON z którego chcesz wyświetlić dane: ", function(jsonfile){
+            fs.readFile(jsonfile, 'utf8', (err, data)=>{
+                if(err){
+                    console.error("Błąd", err)
+                    return
+                }else{
+                    const jsonData = JSON.parse(data || '[]');
+                    console.log("Zawartość pliku: ");
+                    console.log(jsonData);
+                    rl.close()
+                }
+                
+            })
+        })
+    }
+    else{
+        console.log("Błąd wyboru")
+    }
 })
