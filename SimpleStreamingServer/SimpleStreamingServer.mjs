@@ -1,16 +1,25 @@
 import fs from "fs"
 import http from "http"
-import path from "path"
-import EventEmitter from "events"
-
-const serverEmitter = new EventEmitter()
 
 const server = http.createServer((req,res)=>{
-    if(req.url === "/"){
-        serverEmitter.emit("homepage", res)
-    }else{
-        res.end("Błąd, strona wyłączona, uruchom serwer ponownie")
+    const url = new URL(req.url, "http://localhost:3000")
+    const filename = url.searchParams.get('file')
+    
+    if(!filename){
+        res.end('Wpisz w wyszukiwarkę "localhost:3000?file=example.txt"')
+        return
     }
+    const pathfile = `./${filename}`
+    const stream = fs.createReadStream(pathfile)
+
+    
+    stream.on("error", ()=>{
+        res.writeHead(404, {'Content-Type': 'text/plain'})
+        res.end("Plik nie istnieje")
+    })
+    stream.pipe(res)
 })
 
-server.listen(3000, ()=> console.log("Serwer nasłuchuje 3000"))
+
+
+server.listen(3000, ()=> console.log("Port serwera 3000"))
