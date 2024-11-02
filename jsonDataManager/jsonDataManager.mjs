@@ -6,3 +6,11 @@ const rl = readline.createInterface({
     output: process.stdout
 })
 
+rl.question('Jeśli chcesz dodać nowy obiekt wpisz "dodaj", a jeśli chcesz wyświetlić dane wpisz "wyswietl": ', function(option){
+    if(option === "dodaj"){
+        console.log("dodaj")
+    }
+    if(option ==="wyswietl"){
+        console.log("wyświetl")
+    }
+})
