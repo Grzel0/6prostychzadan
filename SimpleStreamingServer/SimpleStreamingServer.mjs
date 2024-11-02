@@ -12,11 +12,6 @@ const server = http.createServer((req,res)=>{
     const pathfile = `./${filename}`
     const stream = fs.createReadStream(pathfile)
 
-    
-    stream.on("error", ()=>{
-        res.writeHead(404, {'Content-Type': 'text/plain'})
-        res.end("Plik nie istnieje")
-    })
     stream.pipe(res)
 })
 
