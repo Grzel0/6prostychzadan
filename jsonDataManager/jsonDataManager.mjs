@@ -17,7 +17,17 @@ rl.question('Jeśli chcesz dodać nowy obiekt wpisz "dodaj", a jeśli chcesz wy�
                         email: email
                     }
                     console.log(user)
-                    rl.close
+                    const jsonstringuser = JSON.stringify(user)
+                    rl.question("Podaj nazwę pliku JSON w którym chcesz zapisać dane: ", function(jsonfile){
+                        fs.writeFile(jsonfile, jsonstringuser, err=>{
+                            if(err){
+                                console.log("Błąd zapisu")
+                                return
+                            }else{
+                                console.log(`zapisano do pliku ${jsonfile}`)
+                            }
+                        })
+                    })
                 })
             })
         })
