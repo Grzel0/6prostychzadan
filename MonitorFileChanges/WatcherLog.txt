@@ -1,0 +1,5 @@
+Sejsa monitorowania folderu watchcatalog
+Dodano plik test.txt
+Zmiana w pliku test.txt
+Zmiana w pliku test.txtSejsa monitorowania folderu watchcatalog
+Usunięto plik test.txt

@@ -6,13 +6,28 @@ fs.watch("./watchcatalog", (eventType, filename)=>{
         const fullPath = path.join('./watchcatalog', filename)
         fs.access(fullPath, err=>{
             if(err){
-                console.log(`Usunięto plik ${filename}`)
+                fs.appendFile("WatcherLog.txt", `\nUsunięto plik ${filename}`, err=>{
+                    if(err){
+                        console.error(`Błąd zapisu ${err}`)
+                        return
+                    }
+                })
             }else{
-                console.log(`Dodano plik ${filename}`)
+                fs.appendFile("WatcherLog.txt", `\nDodano plik ${filename}`, err=>{
+                    if(err){
+                        console.error(`Błąd zapisu ${err}`)
+                        return
+                    }
+                })
             }
         })
     }else if(eventType === "change"){
-        console.log(`zmiany w pliku ${filename}`)
+        fs.appendFile("WatcherLog.txt", `\nZmiana w pliku ${filename}`, err=>{
+            if(err){
+                console.error(`Błąd zapisu ${err}`)
+                return
+            }
+        })
     }
 })
 console.log("Monitoruje folder watchcatalog")
