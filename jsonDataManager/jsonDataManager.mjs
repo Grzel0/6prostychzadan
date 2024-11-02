@@ -19,20 +19,32 @@ rl.question('Jeśli chcesz dodać nowy obiekt wpisz "dodaj", a jeśli chcesz wy�
                     console.log(user)
                     const jsonstringuser = JSON.stringify(user)
                     rl.question("Podaj nazwę pliku JSON w którym chcesz zapisać dane: ", function(jsonfile){
-                        fs.writeFile(jsonfile, jsonstringuser, err=>{
-                            if(err){
-                                console.log("Błąd zapisu")
-                                return
-                            }else{
-                                console.log(`zapisano do pliku ${jsonfile}`)
+                        fs.readFile(jsonfile, 'utf8', (err, data)=>{
+                            let jsonData = []
+                            if(!err){
+                                jsonData = JSON.parse(data || '[]')
                             }
+                            else if(err.code !== 'ENOENT'){
+                                console.error(`Błąd ${err}`)
+                                rl.close()
+                                return
+                            }
+                            jsonData.push(user)
+                            fs.writeFile(jsonfile, JSON.stringify(jsonData, null, 2), err=>{
+                                    if(err){
+                                        console.log(`Błąd zapisu ${err}`)
+                                        return
+                                    }else{
+                                        console.log(`zapisano do pliku ${jsonfile}`)
+                                    }
+                                    rl.close()
+                            })
                         })
                     })
                 })
             })
         })
     }
-    if(option ==="wyswietl"){
-        console.log("wyświetl")
-    }
+        if(option ==="wyswietl"){
+        }
 })
